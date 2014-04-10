@@ -40,6 +40,7 @@ CLOSE | - | Close connection to the server.
 ### Server side
 
 When the server receive a command from a client, you can hook this command and make a special action. To do that, you have to create a function (suffixed by ```Request``` by convention) to do the command action. For example : 
+
 ```python
 def whatTimeRequest(thread):
 	thread.send("TIME " + datetime.now().strftime('%d.%m.%Y %H:%M:%S'))
@@ -48,6 +49,7 @@ def whatTimeRequest(thread):
 For this example, don't forget to import ```datetime```.
 
 Now in ```ThreadClient``` class, add to the function dictionary (class static member) a line to register your function to hook the command. In our example :
+
 ```python
 functionArray = OrderedDict([
 		...
@@ -65,16 +67,18 @@ For the client, we have two scenarios :
 **The client send a message to the server**
 
 To hook the message to send to the server, we need to implement a function (suffixed by ```Request``` by convention). In our example : 
+
 ```python
 def timeRequest(thread):
 	thread.connection.send(prepareString(thread.message))
 ```
 
 And to register this hook function, we add an element to the function dictionary in ```ThreadSending``` class. The key is the regex used to know if it's the function to use for the current sending message. In our example :
+
 ```python
 functionArray = OrderedDict([
 		...
-		(r"TIME .*", timeRequest, 
+		(r"TIME .*", timeRequest), 
 		...
 	])
 ```
@@ -89,6 +93,7 @@ def timeResponse(thread):
 ```
 
 And to register this hook function, we add an element to the function dictionary in ```ThreadReception``` class. The key is the regex used to know if it's the function to use for the current receiving message. In our example :
+
 ```python
 functionArray = OrderedDict([
 		...
