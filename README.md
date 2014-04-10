@@ -97,7 +97,7 @@ And to register this hook function, we add an element to the function dictionary
 ```python
 functionArray = OrderedDict([
 		...
-		(r"TIME", timeRequest),
+		(r"TIME .*", timeResponse),
 		...
 	])
 ```
