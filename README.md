@@ -47,14 +47,13 @@ def whatTimeRequest(thread):
 
 For this example, don't forget to import ```datetime```.
 
-Now in ```ThreadClient``` class, add to the functionArray dictionary (class static member) a line to register your function to hook the command. In our example :
+Now in ```ThreadClient``` class, add to the function dictionary (class static member) a line to register your function to hook the command. In our example :
 ```python
 functionArray = OrderedDict([
-		(r"HELLO", helloRequest),
+		...
 		(r"TIME", whatTimeRequest),
-		(r"CLOSE", closeConnectionRequest),
-		(r".*", notFoundRequest),
-])
+		...
+	])
 ```
 
 And it's done for the server part !
@@ -74,15 +73,15 @@ def timeRequest(thread):
 And to register this hook function, we add an element to the function dictionary in ```ThreadSending``` class. The key is the regex used to know if it's the function to use for the current sending message. In our example :
 ```python
 functionArray = OrderedDict([
-		(r"CLOSE", closeRequest),
+		...
 		(r"TIME .*", timeRequest, 
-		(r".*", messageRequest),
-])
+		...
+	])
 ```
 
 **The client receive a message from the server**
 
-To hook the message sent from the server, we need to implement a function (suffixed by ```Response``` by convention). For example : 
+To hook the message sent from the server, we need to implement a function (suffixed by ```Response``` by convention). In our example : 
 
 ```python
 def timeResponse(thread):
@@ -92,10 +91,10 @@ def timeResponse(thread):
 And to register this hook function, we add an element to the function dictionary in ```ThreadReception``` class. The key is the regex used to know if it's the function to use for the current receiving message. In our example :
 ```python
 functionArray = OrderedDict([
-		(r"MSG .*", messageResponse),
+		...
 		(r"TIME", timeRequest),
-		(r"CLOSE CONFIRM", closeConnectionResponse),
-])
+		...
+	])
 ```
 
 ## Feedback
